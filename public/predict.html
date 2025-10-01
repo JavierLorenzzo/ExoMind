@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predict Exoplanet - ExoAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="predict.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html" class="logo-text">ExoAI</a>
+          </div>
+          <ul class="nav-menu">
+            <li><a href="index.html#features">Features</a></li>
+            <li><a href="learn-more.html">Learn More</a></li>
+            <li><a href="index.html#contact" class="nav-cta">Get Access</a></li>
+          </ul>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <section class="predict-hero">
+        <div class="container">
+          <div class="predict-hero-content">
+            <h1>Exoplanet Prediction</h1>
+            <p>Enter stellar and planetary parameters to predict whether a Kepler Object of Interest (KOI) is a confirmed exoplanet using our Random Forest AI model.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Prediction Form Section -->
+      <section class="prediction-section">
+        <div class="container">
+          <div class="prediction-container">
+            <div class="form-section">
+              <div class="form-header">
+                <h2>Stellar & Planetary Parameters</h2>
+                <p>Fill in the parameters below. Our AI model will analyze the data and provide a prediction with confidence score.</p>
+              </div>
+
+              <form id="prediction-form" class="prediction-form">
+                <div class="form-grid">
+                  <!-- Orbital Parameters -->
+                  <div class="parameter-group">
+                    <h3>Orbital Parameters</h3>
+                    <div class="input-group">
+                      <label for="koi_period">Orbital Period (days)</label>
+                      <input type="number" id="koi_period" name="koi_period" step="any" placeholder="e.g., 365.25" required>
+                      <span class="input-description">Time for one complete orbit around the host star</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_impact">Impact Parameter</label>
+                      <input type="number" id="koi_impact" name="koi_impact" step="any" placeholder="e.g., 0.5" required>
+                      <span class="input-description">Minimum distance between planet and star center during transit</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_duration">Transit Duration (hours)</label>
+                      <input type="number" id="koi_duration" name="koi_duration" step="any" placeholder="e.g., 3.2" required>
+                      <span class="input-description">Duration of the transit event</span>
+                    </div>
+                  </div>
+
+                  <!-- Transit Parameters -->
+                  <div class="parameter-group">
+                    <h3>Transit Parameters</h3>
+                    <div class="input-group">
+                      <label for="koi_depth">Transit Depth (ppm)</label>
+                      <input type="number" id="koi_depth" name="koi_depth" step="any" placeholder="e.g., 1000" required>
+                      <span class="input-description">Depth of the transit signal in parts per million</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_model_snr">Signal-to-Noise Ratio</label>
+                      <input type="number" id="koi_model_snr" name="koi_model_snr" step="any" placeholder="e.g., 15.5" required>
+                      <span class="input-description">Signal-to-noise ratio of the transit model</span>
+                    </div>
+                  </div>
+
+                  <!-- Planetary Parameters -->
+                  <div class="parameter-group">
+                    <h3>Planetary Parameters</h3>
+                    <div class="input-group">
+                      <label for="koi_prad">Planet Radius (Earth radii)</label>
+                      <input type="number" id="koi_prad" name="koi_prad" step="any" placeholder="e.g., 1.0" required>
+                      <span class="input-description">Radius of the planet relative to Earth</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_teq">Equilibrium Temperature (K)</label>
+                      <input type="number" id="koi_teq" name="koi_teq" step="any" placeholder="e.g., 288" required>
+                      <span class="input-description">Estimated equilibrium temperature of the planet</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_insol">Insolation (Earth flux)</label>
+                      <input type="number" id="koi_insol" name="koi_insol" step="any" placeholder="e.g., 1.0" required>
+                      <span class="input-description">Stellar flux received by the planet relative to Earth</span>
+                    </div>
+                  </div>
+
+                  <!-- Stellar Parameters -->
+                  <div class="parameter-group">
+                    <h3>Stellar Parameters</h3>
+                    <div class="input-group">
+                      <label for="koi_steff">Stellar Effective Temperature (K)</label>
+                      <input type="number" id="koi_steff" name="koi_steff" step="any" placeholder="e.g., 5778" required>
+                      <span class="input-description">Surface temperature of the host star</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_slogg">Stellar Surface Gravity (log g)</label>
+                      <input type="number" id="koi_slogg" name="koi_slogg" step="any" placeholder="e.g., 4.44" required>
+                      <span class="input-description">Logarithm of stellar surface gravity</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_srad">Stellar Radius (Solar radii)</label>
+                      <input type="number" id="koi_srad" name="koi_srad" step="any" placeholder="e.g., 1.0" required>
+                      <span class="input-description">Radius of the host star relative to the Sun</span>
+                    </div>
+                    <div class="input-group">
+                      <label for="koi_kepmag">Kepler Magnitude</label>
+                      <input type="number" id="koi_kepmag" name="koi_kepmag" step="any" placeholder="e.g., 12.5" required>
+                      <span class="input-description">Apparent magnitude in Kepler bandpass</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="button" class="btn btn-secondary" id="load-example">Load Example Data</button>
+                  <button type="button" class="btn btn-outline" id="clear-form">Clear Form</button>
+                  <button type="submit" class="btn btn-primary btn-large" id="predict-btn">
+                    <span class="btn-text">Predict Exoplanet</span>
+                    <span class="btn-loading" style="display: none;">
+                      <span class="spinner"></span>
+                      Analyzing...
+                    </span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="results-section" style="display: none;">
+              <div class="results-header">
+                <h2>Prediction Results</h2>
+              </div>
+              <div class="results-content" id="results-content">
+                <!-- Results will be populated by JavaScript -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Info Section -->
+      <section class="info-section">
+        <div class="container">
+          <div class="info-grid">
+            <div class="info-card">
+              <div class="info-icon">🎯</div>
+              <h3>97.8% Accuracy</h3>
+              <p>Our Random Forest model achieves exceptional accuracy on the Kepler Objects of Interest dataset.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">⚡</div>
+              <h3>Instant Results</h3>
+              <p>Get predictions in milliseconds using our optimized ensemble learning algorithm.</p>
+            </div>
+            <div class="info-card">
+              <div class="info-icon">🔬</div>
+              <h3>Scientific Validation</h3>
+              <p>Model trained and validated on confirmed exoplanets from NASA's Kepler mission.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-section">
+              <h4>ExoAI</h4>
+              <p>Advancing exoplanet discovery through artificial intelligence and machine learning.</p>
+            </div>
+            <div class="footer-section">
+              <h4>Technology</h4>
+              <ul>
+                <li><a href="learn-more.html#technology">Random Forest</a></li>
+                <li><a href="learn-more.html#technology">Machine Learning</a></li>
+                <li><a href="learn-more.html#technology">Data Processing</a></li>
+                <li><a href="learn-more.html#technology">Model Validation</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h4>Research</h4>
+              <ul>
+                <li><a href="learn-more.html#publications">Publications</a></li>
+                <li><a href="#">Datasets</a></li>
+                <li><a href="learn-more.html#team">Team</a></li>
+                <li><a href="#">Open Source</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h4>Contact</h4>
+              <ul>
+                <li><a href="#">info@exoai.space</a></li>
+                <li><a href="#">Research Portal</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Press Kit</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 ExoAI. Advancing the frontiers of astronomical discovery.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="module" src="/predict.js"></script>
+  </body>
+</html>
