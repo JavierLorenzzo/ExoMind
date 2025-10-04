@@ -63,8 +63,11 @@ async def predict(request: Request):
     qs = dict(request.query_params)
     params = _parse_params(qs)
 
+
     try:
         proba = koi_model.predict_from_params(params)
+        print("[PREDICT] Params recibidos:", params)
+        print(f"[PREDICT] Probabilidad CONFIRMED: {proba:.6f}\n\n")
     except Exception as e:
         raise HTTPException(400, f"Error en predicción: {e}")
 
