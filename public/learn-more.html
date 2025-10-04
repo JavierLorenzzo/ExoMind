@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Learn More - ExoMind Technology & Team</title>
+    <title>Learn More - ExoMind</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -21,144 +21,32 @@
           </div>
           <ul class="nav-menu">
             <li><a href="index.html#features">Features</a></li>
-            <li><a href="#technology">Technology</a></li>
             <li><a href="#team">Team</a></li>
+            <li><a href="#technology">Technology</a></li>
             <li><a href="index.html#contact" class="nav-cta">Get Access</a></li>
           </ul>
           <div class="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
           </div>
         </div>
       </nav>
 
-      <!-- Hero Section -->
+      <!-- Hero (concise) -->
       <section class="learn-hero">
         <div class="container">
           <div class="learn-hero-content">
-            <h1>The Science Behind ExoMind</h1>
-            <p>Discover how our Random Forest algorithm achieves 97.8% accuracy in exoplanet detection and meet the team pushing the boundaries of astronomical discovery.</p>
+            <h1>The Science & People Behind <span class="gradient-text">ExoMind</span></h1>
+            <p>Meet the team and explore the essentials of our AI approach to exoplanet detection.</p>
           </div>
         </div>
       </section>
 
-      <!-- Technology Section -->
-      <section id="technology" class="technology-section">
-        <div class="container">
-          <div class="section-header">
-            <h2>Random Forest: The Heart of Our AI</h2>
-            <p>Understanding how ensemble learning revolutionizes exoplanet detection</p>
-          </div>
-
-          <div class="tech-content">
-            <div class="tech-overview">
-              <h3>Why Random Forest?</h3>
-              <p>Random Forest is an ensemble learning method that combines multiple decision trees to create a more robust and accurate prediction model. For exoplanet detection, this approach offers several critical advantages:</p>
-              
-              <div class="advantages-grid">
-                <div class="advantage-card">
-                  <div class="advantage-icon">🌳</div>
-                  <h4>Ensemble Power</h4>
-                  <p>Combines hundreds of decision trees, reducing overfitting and improving generalization.</p>
-                </div>
-                <div class="advantage-card">
-                  <div class="advantage-icon">🎯</div>
-                  <h4>Feature Importance</h4>
-                  <p>Automatically identifies the most relevant stellar parameters for exoplanet detection, including transit depth, period, and stellar characteristics.</p>
-                </div>
-                <div class="advantage-card">
-                  <div class="advantage-icon">⚡</div>
-                  <h4>Fast Inference</h4>
-                  <p>Lightweight model architecture enables real-time processing of astronomical data with minimal computational overhead.</p>
-                </div>
-                <div class="advantage-card">
-                  <div class="advantage-icon">⚡</div>
-                  <h4>Fast Training</h4>
-                  <p>Lightweight model architecture enables processing of new astronomical data in a matter of seconds.</p>
-                </div>
-                <div class="advantage-card">
-                  <div class="advantage-icon">🛡️</div>
-                  <h4>Robust to Noise</h4>
-                  <p>Handles noisy astronomical data effectively, maintaining high accuracy even with imperfect observations.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="methodology">
-              <h3>Our Methodology</h3>
-              <div class="methodology-steps">
-                <div class="step">
-                  <div class="step-number">01</div>
-                  <div class="step-content">
-                    <h4>Data Preprocessing</h4>
-                    <p>We process the Kepler Objects of Interest (KOI) dataset, extracting key features like transit depth, orbital period, stellar temperature, and stellar radius. Missing values are handled using advanced imputation techniques.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">02</div>
-                  <div class="step-content">
-                    <h4>Feature Engineering</h4>
-                    <p>Creation of derived features such as planet-to-star radius ratio, equilibrium temperature, and transit signal-to-noise ratio to enhance the model's discriminative power.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">03</div>
-                  <div class="step-content">
-                    <h4>Model Training</h4>
-                    <p>Training ensemble of 500 decision trees with bootstrap sampling and random feature selection. Cross-validation ensures robust performance across different stellar populations.</p>
-                  </div>
-                </div>
-                <div class="step">
-                  <div class="step-number">04</div>
-                  <div class="step-content">
-                    <h4>Validation & Testing</h4>
-                    <p>Rigorous testing on held-out datasets and comparison with confirmed exoplanets from follow-up observations, achieving 97.8% accuracy with minimal false positives.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="performance-metrics">
-              <h3>Performance Metrics</h3>
-              <div class="metrics-grid">
-                <div class="metric-card">
-                  <div class="metric-value">93%</div>
-                  <div class="metric-label">Overall Accuracy</div>
-                  <div class="metric-description">Correctly classifies confirmed exoplanets and false positives</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-value">90%</div>
-                  <div class="metric-label">Precision</div>
-                  <div class="metric-description">Of all positive predictions, 90% are actual exoplanets</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-value">90%</div>
-                  <div class="metric-label">Recall</div>
-                  <div class="metric-description">Successfully identifies 90% of all true exoplanets</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-value">90%</div>
-                  <div class="metric-label">F1-Score</div>
-                  <div class="metric-description">Balanced measure of precision and recall performance</div>
-                </div>
-                <div class="metric-card">
-                  <div class="metric-value">97%</div>
-                  <div class="metric-label">ROC/AUC</div>
-                  <div class="metric-description">Excellent ability to distinguish exoplanets from non-exoplanets</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Team Section -->
+      <!-- Team FIRST -->
       <section id="team" class="team-section">
         <div class="container">
           <div class="section-header">
-            <h2>Meet Our Team</h2>
-            <p>The brilliant minds behind ExoMind's revolutionary exoplanet detection technology</p>
+            <h2>Who We Are</h2>
+            <p>A small, focused team blending astrophysics and applied AI.</p>
           </div>
 
           <div class="team-grid">
@@ -168,13 +56,8 @@
               </div>
               <div class="member-info">
                 <h3>Dr. Sarah Chen</h3>
-                <p class="member-role">Lead AI Researcher & Co-Founder</p>
-                <p class="member-bio">Former NASA Kepler mission scientist with 15+ years in exoplanet research. PhD in Astrophysics from MIT. Pioneer in applying machine learning to astronomical data analysis.</p>
-                <div class="member-expertise">
-                  <span>Machine Learning</span>
-                  <span>Exoplanet Science</span>
-                  <span>Data Analysis</span>
-                </div>
+                <p class="member-role">Lead AI Researcher</p>
+                <p class="member-bio">Former NASA Kepler scientist. 15+ years in transit photometry & ML.</p>
               </div>
             </div>
 
@@ -185,12 +68,7 @@
               <div class="member-info">
                 <h3>Dr. Marcus Rodriguez</h3>
                 <p class="member-role">Chief Technology Officer</p>
-                <p class="member-bio">Expert in ensemble learning and statistical modeling. Former Google AI researcher specializing in large-scale machine learning systems. PhD in Computer Science from Stanford.</p>
-                <div class="member-expertise">
-                  <span>Random Forest</span>
-                  <span>Statistical Modeling</span>
-                  <span>Scalable AI</span>
-                </div>
+                <p class="member-bio">Ensemble learning & scalable systems. Ex Google AI.</p>
               </div>
             </div>
 
@@ -201,111 +79,68 @@
               <div class="member-info">
                 <h3>Dr. Elena Kowalski</h3>
                 <p class="member-role">Senior Data Scientist</p>
-                <p class="member-bio">Specialist in astronomical data processing and feature engineering. Led data analysis for the TESS mission. PhD in Computational Astrophysics from Caltech.</p>
-                <div class="member-expertise">
-                  <span>Data Engineering</span>
-                  <span>Feature Selection</span>
-                  <span>TESS Mission</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="team-member">
-              <div class="member-photo">
-                <img src="https://images.pexels.com/photos/2182975/pexels-photo-2182975.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Dr. James Park">
-              </div>
-              <div class="member-info">
-                <h3>Dr. James Park</h3>
-                <p class="member-role">Machine Learning Engineer</p>
-                <p class="member-bio">Expert in model optimization and deployment. Former SpaceX engineer with experience in real-time systems. MS in Machine Learning from Carnegie Mellon.</p>
-                <div class="member-expertise">
-                  <span>Model Optimization</span>
-                  <span>Real-time Systems</span>
-                  <span>MLOps</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="team-member">
-              <div class="member-photo">
-                <img src="https://images.pexels.com/photos/3778876/pexels-photo-3778876.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Dr. Aisha Patel">
-              </div>
-              <div class="member-info">
-                <h3>Dr. Aisha Patel</h3>
-                <p class="member-role">Validation & Testing Lead</p>
-                <p class="member-bio">Specialist in model validation and statistical analysis. Former researcher at European Space Agency. PhD in Statistics from Oxford University.</p>
-                <div class="member-expertise">
-                  <span>Model Validation</span>
-                  <span>Statistical Analysis</span>
-                  <span>Quality Assurance</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="team-member">
-              <div class="member-photo">
-                <img src="https://images.pexels.com/photos/2182969/pexels-photo-2182969.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop" alt="Dr. Thomas Anderson">
-              </div>
-              <div class="member-info">
-                <h3>Dr. Thomas Anderson</h3>
-                <p class="member-role">Research Scientist</p>
-                <p class="member-bio">Expert in ensemble methods and algorithm development. Published 50+ papers on machine learning applications in astronomy. PhD in Applied Mathematics from Princeton.</p>
-                <div class="member-expertise">
-                  <span>Algorithm Development</span>
-                  <span>Ensemble Methods</span>
-                  <span>Research</span>
-                </div>
+                <p class="member-bio">TESS data, feature engineering, robust preprocessing.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Publications Section -->
-      <section class="publications-section">
+      <!-- Performance (only two cards) -->
+      <section class="performance-section" id="performance">
         <div class="container">
           <div class="section-header">
-            <h2>Research & Publications</h2>
-            <p>Our peer-reviewed research advancing the field of AI-powered exoplanet detection</p>
+            <h2>Performance at a Glance</h2>
+            <p>Two metrics that matter for your workflow.</p>
           </div>
 
-          <div class="publications-grid">
-            <div class="publication-card">
-              <div class="publication-journal">Nature Astronomy</div>
-              <h3>Random Forest Ensemble Learning for Exoplanet Detection in Kepler Data</h3>
-              <p class="publication-authors">Chen, S., Rodriguez, M., Kowalski, E., et al.</p>
-              <p class="publication-year">2024</p>
-              <p class="publication-abstract">We present a novel Random Forest approach achieving 97.8% accuracy in exoplanet detection, significantly outperforming traditional methods...</p>
+          <div class="metrics-compact">
+            <div class="metric-card big">
+              <div class="metric-value">93%</div>
+              <div class="metric-label">de acertar si es exoplaneta</div>
             </div>
-
-            <div class="publication-card">
-              <div class="publication-journal">Astrophysical Journal</div>
-              <h3>Feature Engineering for Transit Photometry: A Machine Learning Perspective</h3>
-              <p class="publication-authors">Kowalski, E., Park, J., Patel, A., Chen, S.</p>
-              <p class="publication-year">2024</p>
-              <p class="publication-abstract">Comprehensive analysis of feature importance in exoplanet detection, identifying key stellar and planetary parameters...</p>
-            </div>
-
-            <div class="publication-card">
-              <div class="publication-journal">Machine Learning in Astronomy</div>
-              <h3>Scalable Ensemble Methods for Large-Scale Astronomical Surveys</h3>
-              <p class="publication-authors">Rodriguez, M., Anderson, T., Chen, S.</p>
-              <p class="publication-year">2023</p>
-              <p class="publication-abstract">Development of computationally efficient ensemble algorithms capable of processing millions of stellar observations...</p>
+            <div class="metric-card big">
+              <div class="metric-value">1%</div>
+              <div class="metric-label">de probabilidad de fallar al descartar un exoplaneta</div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- CTA Section -->
+      <!-- Technology (short) -->
+      <section id="technology" class="technology-section">
+        <div class="container">
+          <div class="section-header">
+            <h2>Technology in 60 Seconds</h2>
+            <p>How ExoMind makes reliable calls with simple, explainable signals.</p>
+          </div>
+
+          <div class="tech-quick">
+            <div class="tech-card">
+              <h3>Ensemble Learning</h3>
+              <p>Random Forest aggregates many shallow decision trees for stable, explainable predictions.</p>
+            </div>
+            <div class="tech-card">
+              <h3>Signal Features</h3>
+              <p>We focus on robust transit descriptors: depth, duration, period, SNR, and stellar context.</p>
+            </div>
+            <div class="tech-card">
+              <h3>Noise Robustness</h3>
+              <p>Outlier handling & imputation keep performance steady with imperfect photometry.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA (short) -->
       <section class="cta">
         <div class="container">
           <div class="cta-content">
-            <h2>Ready to Join Our Mission?</h2>
-            <p>Be part of the next generation of exoplanet discovery. Get early access to ExoMind and help us find new worlds.</p>
+            <h2>Want to try ExoMind?</h2>
+            <p>Get early access and test your own light curves or spectra.</p>
             <div class="cta-buttons">
-              <button class="btn btn-primary btn-large">Request Early Access</button>
-              <button class="btn btn-outline btn-large">Contact Our Team</button>
+              <a class="btn btn-primary btn-large" href="predict.html">Predict exoplanet</a>
+              <a class="btn btn-outline btn-large" href="upload-data.html">Upload data</a>
             </div>
           </div>
         </div>
@@ -314,46 +149,35 @@
       <!-- Footer -->
       <footer class="footer">
         <div class="container">
-          <div class="footer-content">
-            <div class="footer-section">
-              <h4>ExoMind</h4>
-              <p>Advancing exoplanet discovery through artificial intelligence and machine learning.</p>
-            </div>
-            <div class="footer-section">
-              <h4>Technology</h4>
-              <ul>
-                <li><a href="#technology">Random Forest</a></li>
-                <li><a href="#technology">Machine Learning</a></li>
-                <li><a href="#technology">Data Processing</a></li>
-                <li><a href="#technology">Model Validation</a></li>
-              </ul>
-            </div>
-            <div class="footer-section">
-              <h4>Research</h4>
-              <ul>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#">Datasets</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#">Open Source</a></li>
-              </ul>
-            </div>
-            <div class="footer-section">
-              <h4>Contact</h4>
-              <ul>
-                <li><a href="#">info@exomind.earth</a></li>
-                <li><a href="#">Research Portal</a></li>
-                <li><a href="#">Support</a></li>
-                <li><a href="#">Press Kit</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="footer-bottom">
+          <div class="footer-bottom" style="text-align:center;">
             <p>&copy; 2025 ExoMind. Advancing the frontiers of astronomical discovery.</p>
           </div>
         </div>
       </footer>
     </div>
-    
-    <script type="module" src="/learn-more.js"></script>
+
+    <!-- (Opcional) Reveal suave como en el resto del sitio -->
+    <script>
+      (function(){
+        const els = document.querySelectorAll('.section-header, .team-member, .metric-card, .tech-card, .cta-content');
+        const cls = 'show';
+        const base = 'opacity:0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease;';
+        els.forEach(el => el.style.cssText += base);
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach(el => el.style.cssText += 'opacity:1; transform:none;');
+          return;
+        }
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(e=>{
+            if(e.isIntersecting){
+              e.target.style.opacity='1';
+              e.target.style.transform='none';
+              io.unobserve(e.target);
+            }
+          });
+        }, {threshold:0.15});
+        els.forEach(el=>io.observe(el));
+      })();
+    </script>
   </body>
 </html>
