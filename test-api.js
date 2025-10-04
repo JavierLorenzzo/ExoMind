@@ -2,19 +2,18 @@
 const BASE_URL = process.argv[2] ?? 'http://localhost:8000';
 
 const confirmedPPM = {
-  // mismos valores que antes, pero koi_depth en ppm
-  koi_period: 141.2417,
-  koi_impact: 0.39,
-  koi_duration: 9.93,
-  koi_depth: 9800.0,   // <-- PPM
-  koi_prad: 11.1,
-  koi_teq: 320.0,
-  koi_insol: 0.35,
-  koi_model_snr: 18.7,
-  koi_steff: 5630.0,
-  koi_slogg: 4.41,
-  koi_srad: 0.93,
-  koi_kepmag: 13.7
+  koi_period: 9.48803557,
+  koi_impact: 0.146,
+  koi_duration: 2.9575,
+  koi_depth: 615.8,     // ppm  (= 6.1580e+02)
+  koi_prad: 2.26,       // R_earth
+  koi_teq: 793.0,       // K
+  koi_insol: 93.59,     // S_earth
+  koi_model_snr: 35.80,
+  koi_steff: 5455.0,    // K
+  koi_slogg: 4.467,     // log g (cgs)
+  koi_srad: 0.927,      // R_sun
+  koi_kepmag: 15.347    // Kepler magnitude
 };
 
 const falsePositivePPM = {
