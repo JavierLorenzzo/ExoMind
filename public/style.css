@@ -422,7 +422,23 @@ body {
   border-radius: 50%;
 }
 
-.icon-brain,
+.icon-brain {
+  width: 39px;
+  height: 30px;
+  display: flex;
+  align-items: center;   /* centra vertical */
+  justify-content: center; /* centra horizontal */
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  border-radius: 50%;
+  margin: 1 auto var(--spacing-md);
+}
+
+.icon-brain img.icon-img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
 .icon-speed,
 .icon-accuracy,
 .icon-scale {
