@@ -24,7 +24,7 @@
   margin: 0 auto;
 }
 
-/* ---------- Team Section (kept full & elegant) ---------- */
+/* ---------- Team Section (keep big photos) ---------- */
 .team-section {
   padding: var(--spacing-xxl) 0;
   background: var(--bg-secondary);
@@ -59,7 +59,6 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: var(--transition);
 }
-
 .team-member:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-lg);
@@ -71,14 +70,12 @@
   height: 280px;
   overflow: hidden;
 }
-
 .member-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: var(--transition);
 }
-
 .team-member:hover .member-photo img {
   transform: scale(1.05);
 }
@@ -86,32 +83,27 @@
 .member-info {
   padding: var(--spacing-lg);
 }
-
 .member-info h3 {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: var(--spacing-xs);
   color: var(--text-primary);
 }
-
 .member-role {
   color: var(--primary-color);
   font-weight: 600;
   margin-bottom: var(--spacing-md);
 }
-
 .member-bio {
   color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--spacing-md);
 }
-
 .member-expertise {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-xs);
 }
-
 .member-expertise span {
   background: rgba(0, 212, 255, 0.1);
   color: var(--primary-color);
@@ -121,13 +113,12 @@
   font-weight: 500;
 }
 
-/* ---------- Performance Metrics (simplified to two cards) ---------- */
+/* ---------- Performance Metrics (two cards) ---------- */
 .performance-section {
   padding: var(--spacing-xxl) 0;
   background: var(--bg-primary);
   text-align: center;
 }
-
 .performance-section h3 {
   font-size: 2rem;
   font-weight: 700;
@@ -156,32 +147,28 @@
   box-shadow: var(--shadow-lg);
   border-color: var(--primary-color);
 }
-
 .metric-value {
   font-size: 2.8rem;
   font-weight: 800;
   color: var(--primary-color);
   margin-bottom: var(--spacing-sm);
 }
-
 .metric-label {
   font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: var(--spacing-xs);
 }
-
 .metric-description {
   font-size: 0.95rem;
   color: var(--text-secondary);
 }
 
-/* ---------- Technology (short) ---------- */
+/* ---------- Technology (Why Random Forest) ---------- */
 .technology-section {
   padding: var(--spacing-xxl) 0 var(--spacing-xl);
   background: var(--bg-secondary);
 }
-
 .tech-quick {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -189,7 +176,6 @@
   max-width: 1000px;
   margin: 0 auto;
 }
-
 .tech-card {
   background: var(--bg-tertiary);
   border-radius: var(--border-radius-lg);
@@ -203,7 +189,6 @@
   border-color: var(--primary-color);
   box-shadow: var(--shadow-md);
 }
-
 .tech-card h3 {
   font-size: 1.25rem;
   color: var(--primary-color);
@@ -230,13 +215,11 @@
   .learn-hero-content h1 { font-size: 2.25rem; }
   .member-photo { height: 240px; }
 }
-
 @media (max-width: 768px) {
   .learn-hero-content p { font-size: 1rem; }
   .metrics-compact { gap: var(--spacing-lg); }
   .metric-value { font-size: 2.2rem; }
 }
-
 @media (max-width: 480px) {
   .learn-hero-content h1 { font-size: 1.875rem; }
   .team-grid { grid-template-columns: 1fr; gap: var(--spacing-md); }

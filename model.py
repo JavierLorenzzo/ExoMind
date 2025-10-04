@@ -235,6 +235,7 @@ def predict_from_params(params: Dict[str, float], threshold: float = 0.5) -> flo
 # ----------------------------
 # CLI mínima
 # ----------------------------
+
 def parse_kv_list(kv_list: List[str]) -> Dict[str, float]:
     out: Dict[str, float] = {}
     for kv in kv_list or []:
