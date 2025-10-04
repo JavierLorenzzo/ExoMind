@@ -7,7 +7,8 @@ class ExoplanetPredictor {
     this.predictBtn = document.getElementById('predict-btn');
     this.btnText = this.predictBtn.querySelector('.btn-text');
     this.btnLoading = this.predictBtn.querySelector('.btn-loading');
-    
+    this.resultsStorageKey = 'exoai:lastPrediction';
+
     this.init();
   }
 
@@ -143,6 +144,7 @@ class ExoplanetPredictor {
 
     // Show loading state
     this.setLoadingState(true);
+    const requestStarted = performance.now();
 
     try {
       // Get form data
@@ -154,7 +156,13 @@ class ExoplanetPredictor {
       }
 
       const prediction = await this.makePredictionAPICall(parameters);
-      this.displayResults(prediction, parameters);
+      const durationMs = Math.max(0, performance.now() - requestStarted);
+      const enrichedPrediction = {
+        ...prediction,
+        processingTimeMs: durationMs,
+        processingTime: `${(durationMs / 1000).toFixed(2)}s`,
+      };
+      this.displayResults(enrichedPrediction, parameters);
     } catch (error) {
       console.error('Prediction error:', error);
       const message = error instanceof Error ? error.message : 'An error occurred during prediction. Please try again.';
@@ -164,7 +172,7 @@ class ExoplanetPredictor {
     }
   }
 
-  async makePredictionAPICall(parameters) {
+  buildQueryString(parameters) {
     const query = new URLSearchParams();
 
     Object.entries(parameters).forEach(([key, value]) => {
@@ -173,7 +181,11 @@ class ExoplanetPredictor {
       }
     });
 
-    const queryString = query.toString();
+    return query.toString();
+  }
+
+  async makePredictionAPICall(parameters) {
+    const queryString = this.buildQueryString(parameters);
     const endpoint = queryString ? `/api/predict?${queryString}` : '/api/predict';
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), 10000);
@@ -266,12 +278,42 @@ class ExoplanetPredictor {
   }
 
   displayResults(prediction, parameters) {
+    const payload = {
+      prediction,
+      parameters,
+      generatedAt: new Date().toISOString(),
+    };
+
+    try {
+      sessionStorage.setItem(this.resultsStorageKey, JSON.stringify(payload));
+
+      const queryString = this.buildQueryString(parameters);
+      const targetUrl = queryString ? `results.html?${queryString}` : 'results.html';
+      window.location.href = targetUrl;
+      return;
+    } catch (error) {
+      console.error('Redirect to results page failed', error);
+      this.showNotification('Unable to open detailed results page, showing results here instead.', 'warning');
+    }
+
+    this.renderResultsInline(prediction);
+  }
+
+  renderResultsInline(prediction) {
     const { isExoplanet, confidence, details } = prediction;
-    
+    const fallbackDetails = {
+      transitDepth: 0,
+      orbitalPeriod: 0,
+      planetRadius: 0,
+      stellarTemp: 0,
+      signalToNoise: 0,
+      ...(details || {}),
+    };
+
     const statusClass = isExoplanet ? 'confirmed' : 'false-positive';
     const statusText = isExoplanet ? 'Confirmed Exoplanet' : 'False Positive';
     const statusIcon = isExoplanet ? '🪐' : '❌';
-    
+
     this.resultsContent.innerHTML = `
       <div class="prediction-result">
         <div class="prediction-status ${statusClass}">
@@ -283,35 +325,35 @@ class ExoplanetPredictor {
       
       <div class="prediction-details">
         <div class="detail-item">
-          <div class="detail-value">${details.transitDepth.toFixed(1)} ppm</div>
+          <div class="detail-value">${fallbackDetails.transitDepth.toFixed(1)} ppm</div>
           <div class="detail-label">Transit Depth</div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">${details.orbitalPeriod.toFixed(2)} days</div>
+          <div class="detail-value">${fallbackDetails.orbitalPeriod.toFixed(2)} days</div>
           <div class="detail-label">Orbital Period</div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">${details.planetRadius.toFixed(2)} R⊕</div>
+          <div class="detail-value">${fallbackDetails.planetRadius.toFixed(2)} R⊕</div>
           <div class="detail-label">Planet Radius</div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">${details.stellarTemp.toFixed(0)} K</div>
+          <div class="detail-value">${fallbackDetails.stellarTemp.toFixed(0)} K</div>
           <div class="detail-label">Stellar Temperature</div>
         </div>
         <div class="detail-item">
-          <div class="detail-value">${details.signalToNoise.toFixed(1)}</div>
+          <div class="detail-value">${fallbackDetails.signalToNoise.toFixed(1)}</div>
           <div class="detail-label">Signal-to-Noise</div>
         </div>
       </div>
     `;
-    
+
     this.resultsSection.style.display = 'block';
     this.resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-    const message = isExoplanet 
+
+    const message = isExoplanet
       ? `Prediction complete! High confidence exoplanet detected (${confidence}%)`
       : `Prediction complete! Likely false positive (${confidence}% confidence)`;
-    
+
     this.showNotification(message, isExoplanet ? 'success' : 'warning');
   }
 

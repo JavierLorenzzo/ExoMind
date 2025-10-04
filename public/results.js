@@ -5,7 +5,8 @@ class ExoplanetResults {
     this.resultsContent = document.getElementById('results-content');
     this.errorState = document.getElementById('error-state');
     this.parameterGrid = document.getElementById('parameter-grid');
-    
+    this.resultsStorageKey = 'exoai:lastPrediction';
+
     this.init();
   }
 
@@ -27,25 +28,32 @@ class ExoplanetResults {
 
   async loadResults() {
     try {
-      // Get parameters from URL or localStorage
+      const stored = this.consumeStoredResults();
+      if (stored) {
+        this.displayResults(stored.prediction, stored.parameters);
+        return;
+      }
+
       const urlParams = new URLSearchParams(window.location.search);
       const parameters = this.getParametersFromURL(urlParams);
-      
+
       if (!parameters || Object.keys(parameters).length === 0) {
-        // If no parameters, redirect to predict page
         window.location.href = 'predict.html';
         return;
       }
 
-      // Show loading state
       this.showLoadingState();
 
-      // Make API call (placeholder for now)
+      const requestStarted = performance.now();
       const prediction = await this.makePredictionAPICall(parameters);
-      
-      // Display results
-      this.displayResults(prediction, parameters);
-      
+      const durationMs = Math.max(0, performance.now() - requestStarted);
+      const enrichedPrediction = {
+        ...prediction,
+        processingTimeMs: durationMs,
+        processingTime: `${(durationMs / 1000).toFixed(2)}s`,
+      };
+
+      this.displayResults(enrichedPrediction, parameters);
     } catch (error) {
       console.error('Error loading results:', error);
       this.showErrorState('Failed to load prediction results. Please try again.');
@@ -70,39 +78,103 @@ class ExoplanetResults {
     return parameters;
   }
 
-  async makePredictionAPICall(parameters) {
-    // Placeholder API call - replace with actual endpoint
-    const API_ENDPOINT = 'https://api.exoai.space/predict'; // Placeholder URL
-    
+  consumeStoredResults() {
     try {
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // For now, return simulated results
-      // In production, replace this with actual API call:
-      /*
-      const response = await fetch(API_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_API_KEY'
-        },
-        body: JSON.stringify(parameters)
-      });
-      
-      if (!response.ok) {
-        throw new Error(`API call failed: ${response.status}`);
+      const raw = sessionStorage.getItem(this.resultsStorageKey);
+      if (!raw) {
+        return null;
       }
-      
-      return await response.json();
-      */
-      
-      // Simulated prediction logic
-      return this.simulatePrediction(parameters);
-      
+
+      const parsed = JSON.parse(raw);
+      sessionStorage.removeItem(this.resultsStorageKey);
+
+      if (!parsed || typeof parsed !== 'object') {
+        return null;
+      }
+
+      if (!parsed.prediction || !parsed.parameters) {
+        return null;
+      }
+
+      if (parsed.generatedAt && typeof parsed.prediction === 'object') {
+        parsed.prediction.generatedAt = parsed.generatedAt;
+      }
+
+      return parsed;
     } catch (error) {
-      console.error('API call failed:', error);
-      throw new Error('Failed to get prediction from API');
+      console.error('Failed to read stored prediction results', error);
+      sessionStorage.removeItem(this.resultsStorageKey);
+      return null;
+    }
+  }
+
+  buildQueryString(parameters) {
+    const query = new URLSearchParams();
+
+    Object.entries(parameters).forEach(([key, value]) => {
+      if (Number.isFinite(value)) {
+        query.append(key, value.toString());
+      }
+    });
+
+    return query.toString();
+  }
+
+  async makePredictionAPICall(parameters) {
+    const queryString = this.buildQueryString(parameters);
+    const endpoint = queryString ? `/api/predict?${queryString}` : '/api/predict';
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch(endpoint, {
+        headers: { accept: 'application/json' },
+        signal: controller.signal,
+      });
+
+      const bodyText = await response.text();
+      let payload;
+      try {
+        payload = bodyText ? JSON.parse(bodyText) : null;
+      } catch {
+        payload = bodyText;
+      }
+
+      if (!response.ok) {
+        const detail = payload && typeof payload === 'object' ? (payload.error || payload.details || payload.detail) : payload;
+        const message = detail ? `Prediction request failed: ${detail}` : `Prediction request failed with status ${response.status}`;
+        throw new Error(message);
+      }
+
+      const probability = payload && typeof payload === 'object' ? Number(payload.proba_confirmed) : Number.NaN;
+
+      if (!Number.isFinite(probability)) {
+        throw new Error('Prediction response was not understood');
+      }
+
+      const toNumber = (value) => (Number.isFinite(value) ? value : 0);
+      const confidence = Math.round(probability * 100);
+
+      return {
+        isExoplanet: probability >= 0.5,
+        confidence,
+        score: probability,
+        details: {
+          transitDepth: toNumber(parameters.koi_depth),
+          orbitalPeriod: toNumber(parameters.koi_period),
+          planetRadius: toNumber(parameters.koi_prad),
+          stellarTemp: toNumber(parameters.koi_steff),
+          signalToNoise: toNumber(parameters.koi_model_snr),
+        },
+      };
+    } catch (error) {
+      if (error && error.name === 'AbortError') {
+        throw new Error('Prediction request timed out. Please try again.');
+      }
+      console.error('Prediction request failed', error);
+      throw error instanceof Error ? error : new Error('Failed to make prediction API call');
+    } finally {
+      clearTimeout(timeoutId);
     }
   }
 
@@ -154,7 +226,11 @@ class ExoplanetResults {
 
   displayResults(prediction, parameters) {
     const { isExoplanet, confidence, processingTime } = prediction;
-    
+    const formattedConfidence = Number.isFinite(confidence) ? confidence : 0;
+    const formattedProcessingTime = (typeof processingTime === 'string' && processingTime.trim().length > 0)
+      ? processingTime
+      : '—';
+
     // Hide loading, show results
     this.loadingState.style.display = 'none';
     this.resultsContent.style.display = 'block';
@@ -181,24 +257,24 @@ class ExoplanetResults {
     // Update probability display
     const probabilityValue = document.getElementById('probability-value');
     const probabilityCircle = document.querySelector('.probability-circle');
-    
-    probabilityValue.textContent = confidence + '%';
-    probabilityCircle.style.setProperty('--percentage', (confidence * 3.6) + 'deg');
-    
+
+    probabilityValue.textContent = formattedConfidence + '%';
+    probabilityCircle.style.setProperty('--percentage', (formattedConfidence * 3.6) + 'deg');
+
     // Update processing time
     const processingTimeElement = document.getElementById('processing-time');
     if (processingTimeElement) {
-      processingTimeElement.textContent = processingTime;
+      processingTimeElement.textContent = formattedProcessingTime;
     }
-    
+
     // Display parameters
     this.displayParameters(parameters);
-    
+
     // Store results for download
     this.currentResults = {
       prediction,
       parameters,
-      timestamp: new Date().toISOString()
+      timestamp: typeof prediction.generatedAt === 'string' ? prediction.generatedAt : new Date().toISOString()
     };
   }
 
