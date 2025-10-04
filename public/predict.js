@@ -145,61 +145,88 @@ class ExoplanetPredictor {
     this.setLoadingState(true);
 
     try {
-
       // Get form data
       const formData = new FormData(this.form);
       const parameters = {};
-      
-      for (let [key, value] of formData.entries()) {
+
+      for (const [key, value] of formData.entries()) {
         parameters[key] = parseFloat(value);
       }
 
-      // Make API call to get prediction
-      await this.makePredictionAPICall(parameters);
-      
+      const prediction = await this.makePredictionAPICall(parameters);
+      this.displayResults(prediction, parameters);
     } catch (error) {
       console.error('Prediction error:', error);
-      this.showNotification('An error occurred during prediction. Please try again.', 'error');
+      const message = error instanceof Error ? error.message : 'An error occurred during prediction. Please try again.';
+      this.showNotification(message, 'error');
     } finally {
       this.setLoadingState(false);
     }
   }
 
   async makePredictionAPICall(parameters) {
-    // Placeholder API endpoint - replace with actual API URL
-    const API_ENDPOINT = 'https://api.exoai.space/predict'; // Placeholder URL
-    
-    try {
-      // For now, redirect to results page with parameters
-      // In production, make actual API call first:
-      /*
-      const response = await fetch(API_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer YOUR_API_KEY'
-        },
-        body: JSON.stringify(parameters)
-      });
-      
-      if (!response.ok) {
-        throw new Error(`API call failed: ${response.status}`);
+    const query = new URLSearchParams();
+
+    Object.entries(parameters).forEach(([key, value]) => {
+      if (Number.isFinite(value)) {
+        query.append(key, value.toString());
       }
-      
-      const result = await response.json();
-      */
-      
-      // Redirect to results page with parameters
-      const urlParams = new URLSearchParams();
-      Object.entries(parameters).forEach(([key, value]) => {
-        urlParams.append(key, value.toString());
+    });
+
+    const queryString = query.toString();
+    const endpoint = queryString ? `/api/predict?${queryString}` : '/api/predict';
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 10000);
+
+    try {
+      const response = await fetch(endpoint, {
+        headers: { accept: 'application/json' },
+        signal: controller.signal,
       });
-      
-      window.location.href = `results.html?${urlParams.toString()}`;
-      
+
+      const bodyText = await response.text();
+      let payload;
+      try {
+        payload = bodyText ? JSON.parse(bodyText) : null;
+      } catch {
+        payload = bodyText;
+      }
+
+      if (!response.ok) {
+        const detail = payload && typeof payload === 'object' ? (payload.error || payload.details || payload.detail) : payload;
+        const message = detail ? `Prediction request failed: ${detail}` : `Prediction request failed with status ${response.status}`;
+        throw new Error(message);
+      }
+
+      const probability = payload && typeof payload === 'object' ? Number(payload.proba_confirmed) : Number.NaN;
+
+      if (!Number.isFinite(probability)) {
+        throw new Error('Prediction response was not understood');
+      }
+
+      const toNumber = (value) => (Number.isFinite(value) ? value : 0);
+      const confidence = Math.round(probability * 100);
+
+      return {
+        isExoplanet: probability >= 0.5,
+        confidence,
+        score: probability,
+        details: {
+          transitDepth: toNumber(parameters.koi_depth),
+          orbitalPeriod: toNumber(parameters.koi_period),
+          planetRadius: toNumber(parameters.koi_prad),
+          stellarTemp: toNumber(parameters.koi_steff),
+          signalToNoise: toNumber(parameters.koi_model_snr),
+        },
+      };
     } catch (error) {
-      console.error('API call failed:', error);
-      throw new Error('Failed to make prediction API call');
+      if (error && error.name === 'AbortError') {
+        throw new Error('Prediction request timed out. Please try again.');
+      }
+      console.error('Prediction request failed', error);
+      throw error instanceof Error ? error : new Error('Failed to make prediction API call');
+    } finally {
+      clearTimeout(timeoutId);
     }
   }
 
