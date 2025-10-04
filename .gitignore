@@ -12,6 +12,7 @@ Dockerfile
 requirements.txt
 .bolt/*
 *pyc
+.venv/*
 
 node_modules
 dist

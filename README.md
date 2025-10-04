@@ -17,8 +17,7 @@ This repository hosts a lightweight prototype that trains a Random Forest model 
 - **Frontend assets (`public/`, optional `dist/`)**
   - Static site that collects KOI feature inputs and calls the Express proxy. Assets can be swapped for a Vite build placed under `dist/`.
 - **Support files**
-  - `requirements.txt`, `Dockerfile`, and `DEPLOYMENT.md` describe Python dependencies and deployment options.
-  - `test-api.js` is a helper script for manual API checks.
+  - `test-api.js` is a helper script for checking the inference backend.
 
 ## Prerequisites
 - Python 3.10+ with `pip`
@@ -34,7 +33,7 @@ This repository hosts a lightweight prototype that trains a Random Forest model 
    ```bash
    python -m venv .venv
    .\.venv\Scripts\activate    # Windows PowerShell
-   # source .venv/bin/activate   # macOS/Linux
+   source .venv/bin/activate   # macOS/Linux
    pip install -r requirements.txt
    ```
 
