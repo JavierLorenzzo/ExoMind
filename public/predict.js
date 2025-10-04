@@ -46,19 +46,20 @@ class ExoplanetPredictor {
   loadExampleData() {
     // Example data for a confirmed exoplanet (Kepler-452b-like parameters)
     const exampleData = {
-      koi_period: 384.84,
-      koi_impact: 0.4,
-      koi_duration: 10.5,
-      koi_depth: 492,
-      koi_prad: 1.63,
-      koi_teq: 265,
-      koi_insol: 1.04,
-      koi_model_snr: 18.7,
-      koi_steff: 5757,
-      koi_slogg: 4.32,
-      koi_srad: 1.11,
-      koi_kepmag: 13.426
+      koi_period: 230.5,     // días — periodo razonable, varias decenas o centenas
+      koi_impact: 0.25,      // tránsito central
+      koi_duration: 8.7,     // horas
+      koi_depth: 850,        // ppm (0.00085 fracción)
+      koi_prad: 1.8,         // radios terrestres — tipo "super-Tierra"
+      koi_teq: 310,          // K — zona habitable/templada
+      koi_insol: 1.2,        // flujo recibido similar al terrestre
+      koi_model_snr: 24.5,   // buena señal-ruido
+      koi_steff: 5750,       // K — estrella tipo G2V
+      koi_slogg: 4.42,       // gravedad superficial típica solar
+      koi_srad: 1.02,        // radios solares
+      koi_kepmag: 13.1       // magnitud adecuada
     };
+
 
     Object.entries(exampleData).forEach(([key, value]) => {
       const input = document.getElementById(key);
