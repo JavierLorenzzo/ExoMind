@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "py": "python server.py",
+    "kill-ports": "for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :3000') do taskkill /PID %a /F & for /f \"tokens=5\" %a in ('netstat -ano ^| findstr :8000') do taskkill /PID %a /F",
+    "js": "node server.js"
   },
   "dependencies": {
     "express": "^4.19.2"
