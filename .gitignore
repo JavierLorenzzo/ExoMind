@@ -6,8 +6,12 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+apprunner-service-template.json
+DEPLOYMENT.md
+Dockerfile
 .bolt/*
 *pyc
+.venv/*
 
 node_modules
 dist
