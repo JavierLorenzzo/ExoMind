@@ -9,7 +9,6 @@ lerna-debug.log*
 apprunner-service-template.json
 DEPLOYMENT.md
 Dockerfile
-requirements.txt
 .bolt/*
 *pyc
 .venv/*
