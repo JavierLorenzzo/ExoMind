@@ -103,7 +103,7 @@ def train_in_memory(csv_path: str = DATA_PATH) -> Tuple[RandomForestClassifier, 
 
     return rf, medians, feats_in_use
 
-from sklearn.metrics import accuracy_score, roc_auc_score
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_recall_fscore_support
 from sklearn.model_selection import train_test_split
 
 def evaluate_on_test(csv_path: str = DATA_PATH, test_size: float = 0.25, random_state: int = 42) -> dict:
@@ -165,6 +165,9 @@ def evaluate_on_test(csv_path: str = DATA_PATH, test_size: float = 0.25, random_
     # Métricas en test
     proba_test = rf_eval.predict_proba(X_test.values)[:, 1]
     y_pred_test = (proba_test >= 0.5).astype(int)
+    precision, recall, f1, _ = precision_recall_fscore_support(
+        y_test.values, y_pred_test, average="binary", zero_division=0
+    )
     acc = float(accuracy_score(y_test.values, y_pred_test))
     try:
         auc = float(roc_auc_score(y_test.values, proba_test))
@@ -176,8 +179,35 @@ def evaluate_on_test(csv_path: str = DATA_PATH, test_size: float = 0.25, random_
         "n_test": int(len(y_test)),
         "features_used": feats_in_use,
         "accuracy": acc,
+        "precision": float(precision),
+        "recall": float(recall),
+        "f1": float(f1),
         "roc_auc": auc,
     }
+
+def show_evaluation_statistics(stats: dict) -> None:
+    def _fmt(value) -> str:
+        try:
+            if value is None or np.isnan(value):
+                return "nan"
+        except TypeError:
+            try:
+                value = float(value)
+            except (TypeError, ValueError):
+                return str(value)
+        return f"{float(value):.4f}"
+
+    print("[STATS] Evaluacion hold-out")
+    print(f"  Muestras train: {stats.get('n_train', 0)} | test: {stats.get('n_test', 0)}")
+    print(f"  Accuracy : {_fmt(stats.get('accuracy'))}")
+    print(f"  Precision: {_fmt(stats.get('precision'))}")
+    print(f"  Recall   : {_fmt(stats.get('recall'))}")
+    print(f"  F1       : {_fmt(stats.get('f1'))}")
+    print(f"  ROC AUC  : {_fmt(stats.get('roc_auc'))}")
+
+    features = stats.get("features_used") or []
+    if features:
+        print(f"  Features utilizadas: {features}")
 
 # ----------------------------
 # Predicción
@@ -225,6 +255,11 @@ def main():
     args = parser.parse_args()
 
     RF_MODEL, TRAIN_MEDIANS, FEATURES_IN_USE = train_in_memory(args.data)
+    try:
+        stats = evaluate_on_test(args.data)
+        show_evaluation_statistics(stats)
+    except Exception as exc:
+        print(f"[WARN] No fue posible calcular las metricas: {exc}")
 
     if args.json or args.param:
         params = {}
