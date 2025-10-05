@@ -1,0 +1,254 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Data - ExoMind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="predict.css">
+    <style>
+      .upload-hero{
+        padding-top: 80px;
+        margin-bottom: 0;
+        background: radial-gradient(ellipse at center, var(--bg-secondary) 0%, var(--bg-primary) 70%);
+        text-align: center;
+        position: relative;
+      }
+      .upload-hero h1{ font-size: 2.4rem; margin-bottom: var(--spacing-sm); }
+      .upload-hero p{ color: var(--text-secondary); max-width: 720px; margin: 0 auto; margin-bottom: var(--spacing-md);}
+
+      .upload-section{ padding: var(--spacing-lg) 0; }
+      .grid-2{
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--spacing-xl);
+      }
+      @media (max-width: 900px){
+        .grid-2{ grid-template-columns: 1fr; }
+      }
+
+      .upload-card{
+        background: var(--bg-tertiary);
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-md);
+        padding: var(--spacing-xl);
+        text-align: center;
+      }
+
+      .card-title{
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .file-row{
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        justify-content: center;
+        align-items: center;
+        margin-bottom: var(--spacing-lg);
+      }
+      .file-name{
+        color: var(--text-secondary);
+        min-height: 24px;
+        text-align: center;
+      }
+      input[type="file"]{ display: none; }
+      .file-label{
+        cursor: pointer;
+        padding: var(--spacing-md) var(--spacing-xl);
+        border-radius: var(--border-radius);
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: var(--bg-primary);
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        gap: .5rem;
+        border: none;
+      }
+
+      .results-wrap{ margin-top: var(--spacing-lg); display: none; text-align: left; }
+      .results-grid{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: var(--spacing-xl);
+        margin-top: var(--spacing-md);
+      }
+      .result-item{
+        background: var(--bg-secondary);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: var(--border-radius);
+        padding: var(--spacing-lg);
+      }
+      .result-label{ color: var(--primary-color); font-weight: 700; margin-bottom: .25rem; }
+      .result-value{ font-size: 1.25rem; }
+
+      .back-home {
+        text-align: center;
+        margin-top: var(--spacing-xl);
+      }
+
+      /* AnimaciÃ³n reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity .6s ease, transform .6s ease;
+      }
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .reveal[data-delay="1"] { transition-delay: .1s; }
+      .reveal[data-delay="2"] { transition-delay: .2s; }
+      .reveal[data-delay="3"] { transition-delay: .3s; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html" class="logo-text" style="text-decoration:none;">ExoMind</a>
+          </div>
+          <ul class="nav-menu">
+            <li><a href="learn-more.html">Learn More</a></li>
+            <li><a href="predict.html" class="nav-cta">Predict</a></li>
+          </ul>
+          <div class="hamburger">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero -->
+      <section class="upload-hero reveal">
+        <div class="container">
+          <h1>Upload your <span class="gradient-text">DATA</span></h1>
+          <p>Upload a light-curve or emission-spectrum file (CSV or TXT). Then click <strong>Extract Data</strong> to view example outputs.</p>
+        </div>
+      </section>
+
+      <!-- Upload Section -->
+      <section class="upload-section reveal" data-delay="1">
+        <div class="container">
+          <div class="grid-2">
+            <!-- Column 1: Light Curve -->
+            <div class="upload-card reveal" data-delay="1" id="lc-card">
+              <div class="card-title">Light Curve</div>
+              <div class="file-row">
+                <label for="lc-file" class="file-label">Upload Data</label>
+                <input id="lc-file" type="file" accept=".csv,.txt" />
+                <span id="lc-file-name" class="file-name">No file selected</span>
+              </div>
+              <button id="lc-extract" class="btn btn-primary btn-large">Extract Data</button>
+
+              <div id="lc-results" class="results-wrap">
+                <h3>Extracted Parameters (Demo)</h3>
+                <div class="results-grid">
+                  <div class="result-item"><div class="result-label">Period</div><div class="result-value">~449.015 days</div></div>
+                  <div class="result-item"><div class="result-label">Transit duration</div><div class="result-value">~12.5 hours</div></div>
+                  <div class="result-item"><div class="result-label">Transit depth</div><div class="result-value">~94 ppm</div></div>
+                  <div class="result-item"><div class="result-label">Impact parameter</div><div class="result-value">~0.146</div></div>
+                  <div class="result-item"><div class="result-label">SNR</div><div class="result-value">~54</div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Column 2: Emission spectrum curves -->
+            <div class="upload-card reveal" data-delay="2" id="es-card">
+              <div class="card-title">Emission spectrum curves</div>
+              <div class="file-row">
+                <label for="es-file" class="file-label">Upload Data</label>
+                <input id="es-file" type="file" accept=".csv,.txt" />
+                <span id="es-file-name" class="file-name">No file selected</span>
+              </div>
+              <button id="es-extract" class="btn btn-primary btn-large">Extract Data</button>
+
+              <div id="es-results" class="results-wrap">
+                <h3>Extracted Parameters (Demo)</h3>
+                <div class="results-grid">
+                    <div class="result-item"><div class="result-label">Orbital period (P)</div><div class="result-value">~4.23 days</div></div>
+                    <div class="result-item"><div class="result-label">Eccentricity (e)</div><div class="result-value">~0.01</div></div>
+                    <div class="result-item"><div class="result-label">Minimum mass (MpÂ·sin i)</div><div class="result-value">~0.46 MJ</div></div>
+                    <div class="result-item"><div class="result-label">Semi-major axis (a)</div><div class="result-value">~0.052 AU</div></div>
+                    <div class="result-item"><div class="result-label">Stellar mass (M_*)</div><div class="result-value">â‰ˆ 1.11 M_*</div></div>
+                    <div class="result-item"><div class="result-label">Stellar radius (R_*)</div><div class="result-value">~1.20 R_*</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Back to Home -->
+          <div class="back-home reveal" data-delay="3">
+            <a href="index.html" class="btn btn-outline btn-large">Back to Home</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-bottom" style="text-align:center;">
+            <p>&copy; 2025 ExoMind. Advancing the frontiers of astronomical discovery.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- JS -->
+    <script>
+      // Light Curve
+      const lcInput = document.getElementById('lc-file');
+      const lcName  = document.getElementById('lc-file-name');
+      const lcBtn   = document.getElementById('lc-extract');
+      const lcRes   = document.getElementById('lc-results');
+
+      lcInput.addEventListener('change', () => {
+        lcName.textContent = lcInput.files?.[0]?.name || 'No file selected';
+      });
+      lcBtn.addEventListener('click', () => {
+        lcRes.style.display = (lcRes.style.display === 'block') ? 'none' : 'block';
+        lcRes.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // Emission Spectrum
+      const esInput = document.getElementById('es-file');
+      const esName  = document.getElementById('es-file-name');
+      const esBtn   = document.getElementById('es-extract');
+      const esRes   = document.getElementById('es-results');
+
+      esInput.addEventListener('change', () => {
+        esName.textContent = esInput.files?.[0]?.name || 'No file selected';
+      });
+      esBtn.addEventListener('click', () => {
+        esRes.style.display = (esRes.style.display === 'block') ? 'none' : 'block';
+        esRes.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      // Reveal animation
+      (function(){
+        const els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach(el => el.classList.add('show'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('show');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        els.forEach(el => io.observe(el));
+      })();
+    </script>
+  </body>
+</html>

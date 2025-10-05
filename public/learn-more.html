@@ -1,0 +1,227 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learn More - ExoMind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="learn-more.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html" class="logo-text">ExoMind</a>
+          </div>
+          <ul class="nav-menu">
+            <li><a href="learn-more.html">Learn More</a></li>
+            <li><a href="predict.html" class="nav-cta">Predict</a></li>
+          </ul>
+          <div class="hamburger">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Hero -->
+      <section class="learn-hero reveal">
+        <div class="container">
+          <div class="learn-hero-content">
+            <h1>The Science & People Behind <span class="gradient-text">ExoMind</span></h1>
+            <p>Meet the team and explore the essentials of our AI approach to exoplanet detection.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team FIRST -->
+      <section id="team" class="team-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2>Who We Are</h2>
+            <p>A small, focused team blending astrophysics and applied AI.</p>
+          </div>
+
+          <div class="team-grid">
+            <!-- 1 -->
+            <div class="team-member reveal" data-delay="1">
+              <div class="member-photo">
+                <img src="/assets/Sergio.jpeg" alt="Sergio Navarro">
+              </div>
+              <div class="member-info">
+                <h3>Sergio Navarro</h3>
+                <p class="member-role">Full-Stack Developer</p>
+                <p class="member-bio">Full stack development, deployment and optimization. Focus on scalable web applications.</p>
+                <div class="member-expertise">
+                  <span>JavaScript</span><span>React</span><span>Node.js</span>
+                </div>
+              </div>
+            </div>
+            <!-- 2 -->
+            <div class="team-member reveal" data-delay="2">
+              <div class="member-photo">
+                <img src="/assets/Paula.jpeg" alt="Paula Lucas">
+              </div>
+              <div class="member-info">
+                <h3>Paula Lucas</h3>
+                <p class="member-role">Data Scientist</p>
+                <p class="member-bio">Data analysis, modeling and visualization. Focus on turning data into actionable insights.</p>
+                <div class="member-expertise">
+                  <span>Python</span><span>Pandas</span><span>Machine Learning</span>
+                </div>
+              </div>
+            </div>
+            <!-- 3 -->
+            <div class="team-member reveal" data-delay="3">
+              <div class="member-photo">
+                <img src="/assets/Mario.jpeg" alt="Mario Gallego">
+              </div>
+              <div class="member-info">
+                <h3>Mario Gallego</h3>
+                <p class="member-role">Backend & MLOps Engineer</p>
+                <p class="member-bio">Model deployment, automation and cloud integration. Focus on efficient backend pipelines.</p>
+                <div class="member-expertise">
+                  <span>FastAPI</span><span>Docker</span><span>CI/CD</span>
+                </div>
+              </div>
+            </div>
+            <!-- 4 -->
+            <div class="team-member reveal" data-delay="4">
+              <div class="member-photo">
+                <img src="/assets/Lozano.jpeg" alt="Sergio Lozano">
+              </div>
+              <div class="member-info">
+                <h3>Sergio Lozano</h3>
+                <p class="member-role">Software Developer</p>
+                <p class="member-bio">Software design, testing and maintenance. Focus on clean, reliable and maintainable code.</p>
+                <div class="member-expertise">
+                  <span>Java</span><span>Spring Boot</span><span>Git</span>
+                </div>
+              </div>
+            </div>
+            <!-- 5 -->
+            <div class="team-member reveal" data-delay="5">
+              <div class="member-photo">
+                <img src="/assets/Javi.jpeg" alt="Javier Lorenzo">
+              </div>
+              <div class="member-info">
+                <h3>Javier Lorenzo</h3>
+                 <p class="member-role">UI/UX Designer</p>
+                  <p class="member-bio">User-centered design and prototyping. Focus on intuitive and aesthetic digital experiences.</p>
+                  <div class="member-expertise">
+                    <span>Figma</span><span>Prototyping</span><span>Design Systems</span>
+                  </div>
+              </div>
+            </div>
+            <!-- 6 -->
+            <div class="team-member reveal" data-delay="6">
+              <div class="member-photo">
+                <img src="/assets/Maru.jpeg" alt="María Toral">
+              </div>
+              <div class="member-info">
+                <h3>María Toral</h3>
+                <p class="member-role">Astrophysics Advisor</p>
+                <p class="member-bio">Research guidance and data interpretation. Focus on stellar modeling and exoplanet detection.</p>
+                <div class="member-expertise">
+                  <span>Astrophysics</span><span>Data Analysis</span><span>Scientific Research</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Performance (two cards only) -->
+      <section class="performance-section" id="performance">
+        <div class="container">
+          <h3 class="reveal">Performance at a Glance</h3>
+          <div class="metrics-compact">
+            <div class="metric-card big reveal" data-delay="1">
+              <div class="metric-value">93%</div>
+              <div class="metric-label">chance to correctly confirm an exoplanet</div>
+              <div class="metric-description">High positive detection accuracy on KOI-like data.</div>
+            </div>
+            <div class="metric-card big reveal" data-delay="2">
+              <div class="metric-value">1%</div>
+              <div class="metric-label">chance to miss a true exoplanet when filtering</div>
+              <div class="metric-description">Low false-negative rate when screening candidates.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Technology (Why Random Forest) -->
+      <section id="technology" class="technology-section">
+        <div class="container">
+          <div class="section-header reveal">
+            <h2>Why Random Forest?</h2>
+            <p>Short, practical reasons behind our choice.</p>
+          </div>
+
+          <div class="tech-quick">
+            <div class="tech-card reveal" data-delay="1">
+              <h3>Generalizes Well</h3>
+              <p>Many shallow trees reduce overfitting across varied stellar systems.</p>
+            </div>
+            <div class="tech-card reveal" data-delay="2">
+              <h3>Explainable Signals</h3>
+              <p>Highlights depth, duration, period, SNR, and stellar context clearly.</p>
+            </div>
+            <div class="tech-card reveal" data-delay="3">
+              <h3>Fast & Lightweight</h3>
+              <p>Quick inference, easy retraining as new data arrives.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta">
+        <div class="container">
+          <div class="cta-content reveal">
+            <h2>Want to try ExoMind?</h2>
+            <p>Get early access and test your own light curves or spectra.</p>
+            <div class="cta-buttons">
+              <a class="btn btn-primary btn-large" href="predict.html">Predict exoplanet</a>
+              <a class="btn btn-outline btn-large" href="upload-data.html">Upload data</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-bottom" style="text-align:center;">
+            <p>&copy; 2025 ExoMind. Advancing the frontiers of astronomical discovery.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Reveal animation (optional) -->
+    <script>
+      (function(){
+        const els = document.querySelectorAll('.reveal');
+        if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach(el => el.classList.add('show'));
+          return;
+        }
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if (e.isIntersecting) {
+              e.target.classList.add('show');
+              io.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        els.forEach(el => io.observe(el));
+      })();
+    </script>
+  </body>
+</html>

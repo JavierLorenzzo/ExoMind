@@ -1,0 +1,198 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediction Results - ExoMind</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="results.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- Navigation -->
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="index.html" class="logo-text">ExoMind</a>
+          </div>
+          <ul class="nav-menu">
+            <li><a href="learn-more.html">Learn More</a></li>
+            <li><a href="predict.html" class="nav-cta">Predict</a></li>
+          </ul>
+          <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Results Hero Section -->
+      <section class="results-hero">
+        <div class="container">
+          <div class="results-hero-content">
+            <h1>Prediction Results</h1>
+            <p>Your exoplanet detection analysis is complete</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Section -->
+      <section class="results-section">
+        <div class="container">
+          <div class="results-container">
+            <!-- Loading State -->
+            <div class="loading-state" id="loading-state">
+              <div class="loading-spinner"></div>
+              <h2>Analyzing Data...</h2>
+              <p>Our Random Forest model is processing your parameters</p>
+            </div>
+
+            <!-- Results Content -->
+            <div class="results-content" id="results-content" style="display: none;">
+              <div class="prediction-card">
+                <div class="prediction-header">
+                  <div class="prediction-status" id="prediction-status">
+                    <span class="status-icon" id="status-icon"></span>
+                    <span class="status-text" id="status-text">Confirmed Exoplanet</span>
+                  </div>
+                </div>
+
+                <div class="probability-display">
+                  <div class="probability-circle">
+                    <div class="probability-value" id="probability-value">85.7%</div>
+                    <div class="probability-label">Confidence</div>
+                  </div>
+                </div>
+
+                <div class="prediction-details">
+                  <div class="detail-grid">
+                    <div class="detail-item">
+                      <div class="detail-label">Classification</div>
+                      <div class="detail-value" id="classification">Confirmed Exoplanet</div>
+                    </div>
+                    <div class="detail-item">
+                      <div class="detail-label">Model Used</div>
+                      <div class="detail-value">Random Forest</div>
+                    </div>
+                    <div class="detail-item">
+                      <div class="detail-label">Processing Time</div>
+                      <div class="detail-value" id="processing-time">2.3s</div>
+                    </div>
+                    <div class="detail-item">
+                      <div class="detail-label">Dataset</div>
+                      <div class="detail-value">Kepler KOI</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="parameter-summary" id="parameter-summary">
+                  <h3>Input Parameters</h3>
+                  <div class="parameter-grid" id="parameter-grid">
+                    <!-- Parameters will be populated by JavaScript -->
+                  </div>
+                </div>
+
+                <div class="results-actions">
+                  <button class="btn btn-primary" onclick="window.location.href='predict.html'">
+                    Make Another Prediction
+                  </button>
+                  <button class="btn btn-secondary" id="download-results">
+                    Download Results
+                  </button>
+                  <button class="btn btn-outline" onclick="window.location.href='index.html'">
+                    Back to Home
+                  </button>
+                </div>
+              </div>
+
+              <!-- Additional Information -->
+              <div class="info-section">
+                <div class="info-cards">
+                  <div class="info-card">
+                    <div class="info-icon"></div>
+                    <h4>High Accuracy</h4>
+                    <p>Our Random Forest model achieves 93% accuracy on validated exoplanet data.</p>
+                  </div>
+                  <div class="info-card">
+                    <div class="info-icon"></div>
+                    <h4>Fast Processing</h4>
+                    <p>Results generated in seconds using optimized ensemble learning algorithms.</p>
+                  </div>
+                  <div class="info-card">
+                    <div class="info-icon"></div>
+                    <h4>Scientific Validation</h4>
+                    <p>Model trained on confirmed exoplanets from NASA's Kepler mission dataset.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error State -->
+            <div class="error-state" id="error-state" style="display: none;">
+              <div class="error-icon"></div>
+              <h2>Prediction Failed</h2>
+              <p id="error-message">An error occurred while processing your request. Please try again.</p>
+              <div class="error-actions">
+                <button class="btn btn-primary" onclick="window.location.href='predict.html'">
+                  Try Again
+                </button>
+                <button class="btn btn-outline" onclick="window.location.href='index.html'">
+                  Back to Home
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-content">
+            <div class="footer-section">
+              <h4>ExoAI</h4>
+              <p>Advancing exoplanet discovery through artificial intelligence and machine learning.</p>
+            </div>
+            <div class="footer-section">
+              <h4>Technology</h4>
+              <ul>
+                <li><a href="learn-more.html#technology">Random Forest</a></li>
+                <li><a href="learn-more.html#technology">Machine Learning</a></li>
+                <li><a href="learn-more.html#technology">Data Processing</a></li>
+                <li><a href="learn-more.html#technology">Model Validation</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h4>Research</h4>
+              <ul>
+                <li><a href="learn-more.html#publications">Publications</a></li>
+                <li><a href="#">Datasets</a></li>
+                <li><a href="learn-more.html#team">Team</a></li>
+                <li><a href="#">Open Source</a></li>
+              </ul>
+            </div>
+            <div class="footer-section">
+              <h4>Contact</h4>
+              <ul>
+                <li><a href="#">info@exomind.earth</a></li>
+                <li><a href="#">Research Portal</a></li>
+                <li><a href="#">Support</a></li>
+                <li><a href="#">Press Kit</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>&copy; 2025 ExoAI. Advancing the frontiers of astronomical discovery.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="module" src="/results.js"></script>
+  </body>
+</html>
